@@ -1,26 +1,35 @@
-@regression @TestSuiteID=19059
-  Feature: Login
-    Scenario: Login with wrong username
-      Given User is on Login Page
-      And User Hold On KoltiTrace Logo
-      And Select Demo as Environment
-      And Click Button Login
-      And User Login with wrong username
-      Then Pop up error failed to sign in, wrong password should be displayed
+@Test @Positive @Login @regression
+Feature: Login
+  Background:
+    Given User open the app and click next for all step onboarding section
+    And User is On Home Page
+    And Click On Masuk button
 
-    Scenario: Login with wrong password
-      Given User is on Login Page
-      And User Hold On KoltiTrace Logo
-      And Select Demo as Environment
-      And Click Button Login
-      And User Login with wrong password
-      Then Pop up error failed to sign in, wrong password should be displayed
+  Scenario: User should be able to Login with wrong email
+    Given User is on Login Page
+    And Input wrong username and valid password
+    When User click On Continue Button
+    Then Pop up error incorect username or password should be displayed
 
-    Scenario: Login with wrong username and password
-      Given User is on Login Page
-      And User Hold On KoltiTrace Logo
-      And Select Demo as Environment
-      And Click Button Login
-      And User Login with wrong username password
-      Then Pop up error failed to sign in, wrong password should be displayed
+  Scenario: User should be able to Login with valid credentials
+    Given User is on Login Page
+    And Input valid username and wrong password
+    When User click On Continue Button
+    Then Pop up error incorect username or password should be displayed
+
+  Scenario: User should be able to Login with valid credentials
+    Given User is on Login Page
+    And Input wrong username and password
+    When User click On Continue Button
+    Then Pop up error incorect username or password should be displayed
+
+  Scenario: User should be able to Login with valid credentials
+    Given User is on Login Page
+    And Input valid username and password
+    And User click On Continue Button
+    And Wait Until download data is completed
+    When User click on closed button
+    Then Verify that user is on Dashboard Page
+
+
 

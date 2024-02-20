@@ -5,8 +5,13 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.junit.Assert;
-import pages.login.LoginPage;
+import pages.login.DownloadResourcePage;
+import pages.login.LoginKoltivaPage;
+import pages.menu.MenuPage;
+import pages.onboarding.HomeKoltivaPage;
 import utils.PropertyManager;
 
 import java.io.IOException;
@@ -15,86 +20,115 @@ import java.util.Properties;
 public class LoginStep {
 
     private final AndroidDriver<AndroidElement> driver;
-    private Properties props = new PropertyManager().getProps();
+    private Properties props = new PropertyManager().getPropsDemo();
+
+    
 
     public LoginStep() throws IOException {
         super();
         this.driver = Hooks.driver;
     }
-
-    @And("input group name")
-    public void inputGroupName(){
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.clickGroupButton(props.getProperty("data.groupName"));
+    @Given("Input valid username and password")
+    public void input_valid_username_and_password() {
+        LoginKoltivaPage loginKoltivaPage = new LoginKoltivaPage(driver);
+        loginKoltivaPage.login(props.getProperty("data.login.username"),props.getProperty("data.login.password"));
     }
 
-
-    @And("Verify that users is on login page")
-    public void isUserOnLoginPage(){
-        LoginPage loginPage = new LoginPage(driver);
-        Assert.assertTrue(loginPage.isUserOnLoginPage());
+    @Then("Pop up error incorect username or password should be displayed")
+    public void verifyErrorMessageFailedLogin(){
+        DownloadResourcePage downloadResourcePage = new DownloadResourcePage(driver);
+        Assert.assertEquals(props.getProperty("data.login.errorMessageFailedLogin"),downloadResourcePage.getErrorMessageFailedLogin());
     }
 
+    @Given("Input wrong username and valid password")
+    public void input_WrongUsername() {
+        LoginKoltivaPage loginKoltivaPage = new LoginKoltivaPage(driver);
+        loginKoltivaPage.login(props.getProperty("data.login.wrongUsername"),props.getProperty("data.login.password"));
+    }
+
+    @Given("Input valid username and wrong password")
+    public void input_WrongPassword() {
+        LoginKoltivaPage loginKoltivaPage = new LoginKoltivaPage(driver);
+        loginKoltivaPage.login(props.getProperty("data.login.username"),props.getProperty("data.login.wrongPassword"));
+    }
+
+    @Given("Input wrong username and password")
+    public void input_Wrong_valid_username_and_password() {
+        LoginKoltivaPage loginKoltivaPage = new LoginKoltivaPage(driver);
+        loginKoltivaPage.login(props.getProperty("data.login.wrongUsername"),props.getProperty("data.login.wrongPassword"));
+    }
     @Given("User is on Login Page")
-    public void verifyLoginPage(){
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.userOpenTheAppAndClickNextAllStep();
-        Assert.assertTrue(loginPage.isUserOnLoginPage());
+    public void user_is_on_login_page()  {
+        LoginKoltivaPage loginKoltivaPage = new LoginKoltivaPage(driver);
+        Assert.assertTrue(loginKoltivaPage.isUserOnLoginPage());
+    }
+    @When("User click On Continue Button")
+    public void user_is_click_on_continue_button() {
+        LoginKoltivaPage loginKoltivaPage = new LoginKoltivaPage(driver);
+        loginKoltivaPage.clickContinueButton();
+    }
+    @Then("Wait Until download data is completed")
+    public void verify_that_download_data_is_completed() throws InterruptedException{
+        DownloadResourcePage downloadResourcePage = new DownloadResourcePage(driver);
+        String expectedResult1 = "Download data done";
+        String expectedResult2 = "100";
+        downloadResourcePage.waitDownloadDataDone();
+        Assert.assertEquals(expectedResult1,downloadResourcePage.getTextDownloadDataDone());
+    }
+    @When("User click on closed button")
+    public void user_click_on_closed_button() {
+        DownloadResourcePage downloadResourcePage = new DownloadResourcePage(driver);
+        downloadResourcePage.clickOnCloseButton();
     }
 
-    @And("User Hold On KoltiTrace Logo")
-    public void holdOnLogoKoltiTrace(){
-
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.loginPageHoldLogoKoltiTrace();
+    @Then("Verify that user is on Dashboard Page")
+    public void verify_that_user_is_on_dashboard_page() {
+        MenuPage dashboardPage = new MenuPage(driver);
+        Assert.assertTrue(dashboardPage.isUserOnDashboardPage());
     }
 
-    @And("Select Demo as Environment")
-    public void selectDemoAsEnvironment(){
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.loginPageSelectDemoAsEnvironment();
+    @And("Login with user Automation 1")
+    public void UserLoginWithValidCredentials(){
+        LoginKoltivaPage loginKoltivaPage = new LoginKoltivaPage(driver);
+        Assert.assertTrue(loginKoltivaPage.isUserOnLoginPage());
+        loginKoltivaPage.login(props.getProperty("data.login.username"),props.getProperty("data.login.password"));
+        loginKoltivaPage.clickContinueButton();
+        DownloadResourcePage downloadResourcePage = new DownloadResourcePage(driver);
+        String expectedResult1 = "Download data done";
+        String expectedResult2 = "100";
+        Assert.assertEquals(expectedResult1,downloadResourcePage.getTextDownloadDataDone());
+        Assert.assertEquals(expectedResult2,downloadResourcePage.getTextDownlaodPercentage());
+        downloadResourcePage.clickOnCloseButton();
     }
 
-    @And("Click Button Login")
-    public void clickButtonLogin(){
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.loginPageClickButtonLogin();
+    @Given("User is on Menu Page")
+    public void isUserOnMenuPage(){
+        MenuPage menuPage = new MenuPage(driver);
+        Assert.assertTrue(menuPage.isUserOnDashboardPage());
     }
 
-    @And("User Login with valid credentials")
-    public void userLoginWithValidCredential(){
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.loginValidCredentials();
+    @And("Login with user Automation 2")
+    public void UserLoginWithUserAutomation2(){
+        HomeKoltivaPage homeKoltivaPage = new HomeKoltivaPage(driver);
+        homeKoltivaPage.clickLoginButton();
+        LoginKoltivaPage loginKoltivaPage = new LoginKoltivaPage(driver);
+        Assert.assertTrue(loginKoltivaPage.isUserOnLoginPage());
+        loginKoltivaPage.login(props.getProperty("data.login.username2"),props.getProperty("data.login.password2"));
+        loginKoltivaPage.clickContinueButton();
+        DownloadResourcePage downloadResourcePage = new DownloadResourcePage(driver);
+        String expectedResult1 = "Download data done";
+        String expectedResult2 = "100";
+        Assert.assertEquals(expectedResult1,downloadResourcePage.getTextDownloadDataDone());
+        downloadResourcePage.clickOnCloseButton();
     }
 
-    @And("User Login with wrong username")
-    public void userLoginWithWrongUsername(){
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.loginWrongUsername();
-    }
-
-    @And("User Login with wrong password")
-    public void userLoginWithWrongPassword(){
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.loginWrongPassword();
-    }
-
-    @And("Pop up error failed to sign in, wrong password should be displayed")
-    public void verifyFailedLogin(){
-        LoginPage loginPage = new LoginPage(driver);
-        Assert.assertEquals(props.getProperty("data.login.failedLoginMessag"),loginPage.getErrorMessageFailedLogin());
-    }
-
-    @And("User Login with wrong username password")
-    public void userLoginWithWrongEmailAndPassword(){
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.loginWrongPassword();
+    @And("Verify that user is login page")
+    public void isUserOnHomePage(){
+        HomeKoltivaPage homeKoltivaPage = new HomeKoltivaPage(driver);
+        Assert.assertTrue(homeKoltivaPage.isUserOnHomePage());
     }
 
 
-    @Given("Users open the app")
-    public void usersOpenTheApp(){
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.loginPageClickButtonLogin();
-    }
+
+
 }
