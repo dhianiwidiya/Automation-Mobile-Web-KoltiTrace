@@ -1,0 +1,6 @@
+com\koltiva\hooks\Hooks.class
+com\koltiva\stepdef\login\LoginStep.class
+com\koltiva\stepdef\onboarding\OnboardingStep.class
+com\koltiva\stepdef\transaction\TransactionStep.class
+com\koltiva\runners\RunCukesTest.class
+TestlinkTest.class

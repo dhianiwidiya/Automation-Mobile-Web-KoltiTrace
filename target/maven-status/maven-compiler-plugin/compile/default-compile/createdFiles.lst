@@ -1,0 +1,8 @@
+pages\login\LoginKoltivaPage.class
+pages\login\DownloadResourcePage.class
+utils\TestUtils.class
+pages\menu\MenuPage.class
+pages\onboarding\HomeKoltivaPage.class
+pages\transaction\TransactionPage.class
+pages\onboarding\GreatingPage.class
+pages\onboarding\StartingPage.class

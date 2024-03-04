@@ -1,0 +1,49 @@
+# Created at 2024-02-28T17:37:07.430
+TestSet has not finished before stream error has appeared >> initializing exit by non-null configuration: DEFAULT
+java.io.EOFException
+	at java.base/java.io.DataInputStream.readInt(DataInputStream.java:397)
+	at org.apache.maven.surefire.booter.MasterProcessCommand.decode(MasterProcessCommand.java:115)
+	at org.apache.maven.surefire.booter.CommandReader$CommandRunnable.run(CommandReader.java:391)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+
+
+# Created at 2024-02-28T17:37:19.113
+Unexpected IOException: 5,1,TestlinkTest,test on test(TestlinkTest)(TestlinkTest),TestlinkTest,null,null
+
+
+# Created at 2024-02-28T17:37:19.280
+Unexpected IOException with stream: SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+
+
+# Created at 2024-02-28T17:37:19.281
+Unexpected IOException with stream: SLF4J: Defaulting to no-operation (NOP) logger implementation
+
+
+# Created at 2024-02-28T17:37:19.281
+Unexpected IOException with stream: SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+
+
+# Created at 2024-02-28T17:37:20.119
+Unexpected IOException with stream: Establishing connection to Testlink...
+
+# Created at 2024-02-28T17:37:20.205
+Unexpected IOException with stream: Done!
+
+
+# Created at 2024-02-28T17:37:20.995
+Unexpected IOException with stream: Checking features Transaction
+
+
+# Created at 2024-02-28T17:37:21.003
+Unexpected IOException with stream: 
+Summary: 0 passed and 0 failed
+
+
+# Created at 2024-02-28T17:37:21.006
+Unexpected IOException: 6,1,TestlinkTest,test on test(TestlinkTest)(TestlinkTest),null,null,null
+
+
+# Created at 2024-02-28T17:37:21.113
+Unexpected IOException: 2,1,org.apache.maven.surefire.testng.TestNGDirectoryTestSuite,TestSuite,null,null,null
+
+
